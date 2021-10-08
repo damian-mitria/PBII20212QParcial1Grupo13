@@ -4,15 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import ar.edu.unlam.dominio.BluRay;
-import ar.edu.unlam.dominio.Cliente;
-import ar.edu.unlam.dominio.Dvd;
-import ar.edu.unlam.dominio.NoSocio;
-import ar.edu.unlam.dominio.Pelicula;
-import ar.edu.unlam.dominio.Socio;
-import ar.edu.unlam.dominio.TipoDeGenero;
-import ar.edu.unlam.dominio.Vhs;
-import ar.edu.unlam.dominio.VideoClub;
+import ar.edu.unlam.dominio.*;
 
 public class TestVideoClub {
 
@@ -60,6 +52,12 @@ public class TestVideoClub {
 		String valorEsperado = "Soy pirateable";
 
 		assertEquals(valorEsperado, laLLamada.decirSiEsPirateable());
+	}
+	
+	@Test
+	public void queSePuedaAgregarUnClienteALaListaDeClientesDelVideoClub() {
+		
+		assertTrue(videoClub.agregarCliente(martin));
 	}
 
 	@Test
@@ -193,4 +191,6 @@ public class TestVideoClub {
 			assertFalse(videoClub.alquilarPelicula(batman.getCodigo(), martin.getDni())); // aca ya no se puede alquilar porque la pelicula esta gastada
 		}
 
+		
+		
 }
