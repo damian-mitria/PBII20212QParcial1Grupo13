@@ -1,6 +1,6 @@
 package ar.edu.unlam.dominio;
 
-public class Cliente {
+public abstract class Cliente {
 
 	private String nombre;
 	private Integer dni;
