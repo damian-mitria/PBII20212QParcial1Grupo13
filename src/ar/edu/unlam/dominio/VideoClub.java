@@ -39,4 +39,51 @@ public class VideoClub {
         return seAgrego;
     }
 	
+    public Pelicula buscarPeliculaPorCodigo(Integer codigo) {
+		Pelicula peliculaEncontrada = null;
+		for (int i = 0; i < listaDePeliculas.length; i++) {
+			if (listaDePeliculas[i] != null && listaDePeliculas[i].getDisponible() == true) {
+				if (listaDePeliculas[i].getCodigo().equals(codigo)) {
+					peliculaEncontrada = listaDePeliculas[i];
+					break;
+				}
+			}
+
+		}
+		return peliculaEncontrada;
+	}
+
+	public Cliente buscarClientePorDni(Integer dni) {
+		Cliente clienteEncontrado = null;
+		for (int i = 0; i < listaDeClientes.length; i++) {
+			if (listaDeClientes[i] != null) {
+				if (listaDeClientes[i].getDni().equals(dni)) {
+					clienteEncontrado = listaDeClientes[i];
+					break;
+				}
+			}
+
+		}
+
+		return clienteEncontrado;
+	}
+
+	public Boolean alquilarPelicula(Integer codigoDePelicula, Integer dni) {
+		Boolean sePuedeAlquilar = false;
+		Pelicula pelicula = buscarPeliculaPorCodigo(codigoDePelicula);
+		Cliente cliente = buscarClientePorDni(dni);
+		if (cliente.getEsSocio() == true && cliente != null && pelicula.getIsGastada() == false && pelicula != null) {
+			Transaccion alquiler = new Transaccion(pelicula, cliente, TipoDeTransaccion.ALQUILER);
+			for (int i = 0; i < listaDeAlquieres.length; i++) {
+				if (listaDeAlquieres[i] == null) {
+					listaDeAlquieres[i] = alquiler;
+					pelicula.setDisponible(false);
+					pelicula.gastarse();
+					sePuedeAlquilar = true;
+					break;
+				}
+			}
+		}
+		return sePuedeAlquilar;
+	}
 }
