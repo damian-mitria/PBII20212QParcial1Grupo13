@@ -137,10 +137,10 @@ public class VideoClub {
 
 	}
 	
-	public Integer decirCodigoDeLaTransaccion(Integer dni) {
+	public Integer decirCodigoDeLaTransaccion(Integer codigoTransaccion) {
         Integer codigo = 0;
         for (int i = 0; i < listaDeAlquieres.length; i++) {
-            if (listaDeAlquieres[i] != null && listaDeAlquieres[i].getCliente().getDni().equals(dni)) {
+            if (listaDeAlquieres[i] != null && listaDeAlquieres[i].getCliente().getDni().equals(codigoTransaccion)) {
                 codigo = listaDeAlquieres[i].getId();
                 break;
             }
@@ -148,5 +148,56 @@ public class VideoClub {
         }
         return codigo;
     }
+	
+	public Boolean recepcionarPeliculaAlquilada(Integer idTransaccion) {
+		Boolean seDevolvio = false;
+		Pelicula pelicula = null;
+		for (int i = 0; i < listaDeAlquieres.length; i++) {
+			if (listaDeAlquieres[i] != null && listaDeAlquieres[i].getId().equals(idTransaccion)) {
+				pelicula = listaDeAlquieres[i].getPelicula();
+				pelicula.setDisponible(true);
+				listaDeAlquieres[i] = null;
+				seDevolvio = true;
+				break;
+			}
+		}
+		return seDevolvio;
+	}
+	
+	public void enviarMensajeALosCliente(String mensaje) {
+		for (int i = 0; i < listaDeClientes.length; i++) {
+			if(listaDeClientes[i] != null ) {
+				if(!listaDeClientes[i].geteMail().equals("")) {
+					listaDeClientes[i].setBuzonDeMensajes(mensaje);
+				}
+				
+			}
+			
+		}
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Pelicula[] getListaDePeliculas() {
+		return listaDePeliculas;
+	}
+
+	public Cliente[] getListaDeClientes() {
+		return listaDeClientes;
+	}
+
+	public Transaccion[] getListaDeAlquieres() {
+		return listaDeAlquieres;
+	}
+
+	public Transaccion[] getListaDeVentas() {
+		return listaDeVentas;
+	}
 
 }
