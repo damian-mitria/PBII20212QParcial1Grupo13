@@ -53,6 +53,12 @@ public class TestVideoClub {
 
 		assertEquals(valorEsperado, laLLamada.decirSiEsPirateable());
 	}
+	
+	@Test
+	public void queSePuedaAgregarUnClienteALaListaDeClientesDelVideoClub() {
+		
+		assertTrue(videoClub.agregarCliente(martin));
+	}
 
 	@Test
 	public void queElVideoClubPuedaRegistarQueUnSocioPuedaAlquilarUnaPelicula() {
@@ -185,4 +191,6 @@ public class TestVideoClub {
 			assertFalse(videoClub.alquilarPelicula(batman.getCodigo(), martin.getDni())); // aca ya no se puede alquilar porque la pelicula esta gastada
 		}
 
+		
+		
 }
