@@ -9,8 +9,8 @@ public class VideoClub {
 
 	public VideoClub(String nombre) {
 		this.nombre = nombre;
-		this.listaDePeliculas = new Pelicula[100];
-		this.listaDeClientes = new Cliente[100];
+		this.listaDePeliculas = new Pelicula[5];
+		this.listaDeClientes = new Cliente[5];
 		this.listaDeAlquieres = new Transaccion[100];
 		this.listaDeVentas = new Transaccion[100];
 	}
@@ -137,10 +137,10 @@ public class VideoClub {
 
 	}
 	
-	public Integer decirCodigoDeLaTransaccion(Integer codigoTransaccion) {
+	public Integer decirCodigoDeLaTransaccion(Integer dni) {
         Integer codigo = 0;
         for (int i = 0; i < listaDeAlquieres.length; i++) {
-            if (listaDeAlquieres[i] != null && listaDeAlquieres[i].getCliente().getDni().equals(codigoTransaccion)) {
+            if (listaDeAlquieres[i] != null && listaDeAlquieres[i].getCliente().getDni().equals(dni)) {
                 codigo = listaDeAlquieres[i].getId();
                 break;
             }
@@ -153,7 +153,7 @@ public class VideoClub {
 		Boolean seDevolvio = false;
 		Pelicula pelicula = null;
 		for (int i = 0; i < listaDeAlquieres.length; i++) {
-			if (listaDeAlquieres[i] != null && listaDeAlquieres[i].getId().equals(idTransaccion)) {
+			if (listaDeAlquieres[i] != null && listaDeAlquieres[i].getId().equals(idTransaccion) && listaDeAlquieres[i].getPelicula().getDisponible()==false) {
 				pelicula = listaDeAlquieres[i].getPelicula();
 				pelicula.setDisponible(true);
 				listaDeAlquieres[i] = null;

@@ -194,7 +194,87 @@ public class TestVideoClub {
 			assertFalse(videoClub.alquilarPelicula(batman.getCodigo(), martin.getDni())); // aca ya no se puede alquilar porque la pelicula esta gastada
 		}
 
+		@Test
+        public void queNoSeAgreguenClientesDeMas() {
+			
+            videoClub.agregarCliente(martin);
+            videoClub.agregarCliente(pedro);
+            
+            Cliente juan = new Socio("Juan", 123);
+            Cliente damian = new NoSocio("Damian", 456);
+            Cliente celeste = new Socio("Celeste", 789);
+            Cliente andy = new Socio("Andy", 012);
+            
+            videoClub.agregarCliente(juan);
+            videoClub.agregarCliente(damian);
+            videoClub.agregarCliente(celeste);
 
-		// hago merge
+            assertFalse(videoClub.agregarCliente(andy));
+        }
+
+        @Test 
+        public void queNoSeAgreguenPeliculasDeMas() {
+        	
+            videoClub.agregarPelicula(batman);
+            videoClub.agregarPelicula(laLLamada);
+            videoClub.agregarPelicula(scaryMovie);
+            videoClub.agregarPelicula(rapidoYFurioso);
+            videoClub.agregarPelicula(elConjuro);
+
+            assertFalse(videoClub.agregarPelicula(tontoYReTonto));
+        }
+        
+        @Test
+    	public void queSePuedaAgregarUnaPeliculaALaListaDePeliculasDelVideoClub() {
+    		assertTrue(videoClub.agregarPelicula(batman));
+    	}
+    	@Test
+    	public void queSePuedaBuscarUnaPeliculaPorCodigo() {
+    		videoClub.agregarPelicula(batman);
+    		assertEquals(batman, videoClub.buscarPeliculaPorCodigo(batman.getCodigo()));
+    	}
+    	@Test
+    	public void queSePuedaBuscarUnClientePorDni() {
+    		videoClub.agregarCliente(martin);
+    		assertEquals(martin, videoClub.buscarClientePorDni(martin.getDni()));
+    	}
+    	@Test
+    	public void queSePuedaBuscarUnaPeliculaPorCodigoSOLOsiEstaDisponible() { //porque si no disponible significa que esta alquilada
+    		videoClub.agregarPelicula(batman);
+    		videoClub.agregarCliente(martin);
+    		videoClub.alquilarPelicula(batman.getCodigo(), martin.getDni());
+    		//no se puede buscar ya que no esta disponible, observacion
+    		assertEquals(null, videoClub.buscarPeliculaPorCodigo(batman.getCodigo()));
+    	}
+    	
+    	@Test
+    	public void queSePuedaDecirElCodigoDeLaTrasaccion() {
+    		videoClub.agregarPelicula(batman);
+    		videoClub.agregarCliente(martin);
+    		videoClub.alquilarPelicula(batman.getCodigo(), martin.getDni());
+    		Transaccion ventaTransaccion = new Transaccion(batman, martin, TipoDeTransaccion.VENTA);
+    		Integer valorEsperado= ventaTransaccion.getId();
+    		
+    		assertEquals(valorEsperado, videoClub.decirCodigoDeLaTransaccion(ventaTransaccion.getId()));
+    	}
+    	
+    	@Test
+    	public void queNoSeDevuelvaCorrectamenteUnaPelicualAlquiladaSiEstaDisponible() {
+
+    		videoClub.agregarCliente(martin);
+    		videoClub.agregarPelicula(batman);
+    		videoClub.alquilarPelicula(batman.getCodigo(), martin.getDni());
+    		Integer idPrestamo = videoClub.decirCodigoDeLaTransaccion(martin.getDni());
+    		batman.setDisponible(true);
+    		assertFalse(videoClub.recepcionarPeliculaAlquilada(idPrestamo));
+    	}
+		
+//    	Integrantes GRUPO 13: 
+//    	
+//    	-Aguirre, Celeste Melina (DNI 42101140)
+//    	-Argañaraz, Alan Gabriel (DNI 43.873.058)
+//    	-Manchini, Juan Manuel (DNI 42.997.249)
+//    	-Mitria, Damian Nahuel (DNI 34.277.101)
+
 		
 }
