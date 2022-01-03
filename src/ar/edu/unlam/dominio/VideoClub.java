@@ -87,7 +87,6 @@ public class VideoClub {
 		return sePuedeAlquilar;
 	}
 
-	// Aca estamos aplicando descuento a los socios en la compra de una pelicula
 	public Boolean venderPelicula(Integer codigoDePelicula, Integer dni) {
 		Boolean sePuedeVender = false;
 		Pelicula pelicula = buscarPeliculaPorCodigo(codigoDePelicula);
