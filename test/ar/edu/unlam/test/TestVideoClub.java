@@ -6,8 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import ar.edu.unlam.dominio.*;
 
-
-
 public class TestVideoClub {
 
 	VideoClub videoClub;
